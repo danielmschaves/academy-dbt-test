@@ -10,7 +10,7 @@ models:
          - unique
          - not_null
      
-     - name: ID_ESTADO_PROVINCIA
+     - name: ID_ESTADO
        description: Identificador do estado ou província
        tests:
          - not_null
@@ -18,12 +18,12 @@ models:
              to: source('sap', 'stateprovince')
              field: stateprovinceid
 
-     - name: LINHA_ENDERECO_1
+     - name: ENDERECO_1
        description: Primeira linha do endereço
        tests:
          - not_null
 
-     - name: LINHA_ENDERECO_2
+     - name: ENDERECO_2
        description: Segunda linha do endereço (complemento)
 
      - name: CIDADE
