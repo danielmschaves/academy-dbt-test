@@ -1,0 +1,51 @@
+version: 2
+
+models:
+ - name: stg_sap__endereco
+   description: Tabela de endereços formatada a partir da fonte sap_address
+   columns:
+     - name: ID_ENDERECO
+       description: Identificador único do endereço
+       tests:
+         - unique
+         - not_null
+     
+     - name: ID_ESTADO
+       description: Identificador do estado ou província
+       tests:
+         - not_null
+         - relationships:
+             to: source('sap', 'stateprovince')
+             field: stateprovinceid
+
+     - name: ENDERECO_1
+       description: Primeira linha do endereço
+       tests:
+         - not_null
+
+     - name: ENDERECO_2
+       description: Segunda linha do endereço (complemento)
+
+     - name: CIDADE
+       description: Nome da cidade
+       tests:
+         - not_null
+
+     - name: CEP
+       description: Código postal do endereço
+       tests:
+         - not_null
+
+     - name: LOCALIZACAO_ESPACIAL
+       description: Coordenadas geográficas do endereço
+
+     - name: DATA_MODIFICACAO
+       description: Data e hora da última modificação do registro
+       tests:
+         - not_null
+
+     - name: ID_LINHA_UNICO
+       description: Identificador único global do registro
+       tests:
+         - unique
+         - not_null

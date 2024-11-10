@@ -2,3 +2,8 @@
 target/
 dbt_packages/
 logs/
+.user.yml
+academy-test.duckdb
+academy-test.duckdb.wal
+package-lock.yml
+poetry.lock
