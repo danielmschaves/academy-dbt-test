@@ -32,13 +32,18 @@ clean-targets:         # directories to be removed by `dbt clean`
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
-  academy_dbt_test: # <-- Name of the project. If you renamed your project you have to change this as well
+  academy_dbt_test:
+    staging:
+      +materialized: view
+      +schema: stg
     
-    # Applies to all files under models/example/
-    example:
-      materialized: view
+    intermediate:
+      +materialized: view
+      +schema: int
 
-
+    marts:
+      +materialized: table
+      +schema: mrt
 seeds:
   academy_dbt_test: # <-- Name of the project. If you renamed your project you have to change this as well
     sap_adventure_works:

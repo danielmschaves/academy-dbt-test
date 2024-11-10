@@ -1,0 +1,64 @@
+version: 2
+sources:
+  - name: sap
+    description: Fonte de dados da Adventure Works
+    schema: sap_adw
+    tables:
+      - name: address
+        description: Informações de endereço para clientes, funcionários e fornecedores
+        columns:
+          - name: addressid
+            description: Chave primária da tabela de endereços
+      - name: countryregion
+        description: Tabela de consulta contendo os códigos padrão ISO para países e regiões
+        columns:
+          - name: countryregioncode
+            description: Chave primária da tabela de países
+      - name: creditcard
+        description: Informações de cartão de crédito dos clientes
+        columns:
+          - name: creditcardid
+            description: Chave primária da tabela de cartões de crédito
+      - name: customer
+        description: Informações atuais dos clientes
+        columns:
+          - name: customerid
+            description: Chave estrangeira de BusinessEntityID como chave única da tabela de clientes
+      - name: person
+        description: Pessoas envolvidas com funcionários da AdventureWorks, contatos de clientes e contatos de fornecedores
+        columns:
+          - name: businessentityid
+            description: Chave estrangeira de BusinessEntityID como chave única da tabela de pessoas
+      - name: product
+        description: Produtos vendidos ou utilizados na fabricação de produtos vendidos
+        columns:
+          - name: productid
+            description: Chave primária para registros de produtos
+            tests:
+              - unique
+              - not_null
+      - name: salesorderdetail
+        description: Produtos individuais associados a um pedido de venda específico
+        columns:
+          - name: salesorderdetailid
+            description: Chave primária da tabela de detalhes do pedido de vendas
+      - name: salesorderheader
+        description: Informações gerais do pedido de vendas
+        columns:
+          - name: salesorderid
+            description: Chave primária da tabela de pedidos de venda
+      - name: salesorderheadersalesreason
+        description: Tabela de referência cruzada mapeando pedidos de venda para códigos de motivo de venda
+        columns:
+          - name: salesorderid
+            description: Chave estrangeira da SalesOrderHeader para fazer ligação com motivo de venda
+      - name: salesreason
+        description: Tabela de consulta dos motivos de compra do cliente
+        columns:
+          - name: salesreasonid
+            description: Chave primária da tabela de motivos de venda
+      - name: stateprovince
+        description: Tabela de consulta de estados e províncias
+        columns:
+          - name: stateprovinceid
+            description: Chave primária da tabela de estados e províncias

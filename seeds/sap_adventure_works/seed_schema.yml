@@ -19,3 +19,10 @@ seeds:
       column_types:
         rejectedqty: numeric
         receivedqty: numeric
+
+  - name: creditcard
+    config:
+      column_types:
+        creditcardid: integer
+        cardtype: varchar
+        cardnumber: varchar
