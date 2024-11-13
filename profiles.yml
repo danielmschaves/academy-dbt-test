@@ -1,7 +1,16 @@
-duckdb:
-  target: dev
+academy_dbt_test:
+  target: dev  # ambiente padrão
   outputs:
+    # Ambiente de desenvolvimento (DuckDB)
     dev:
       type: duckdb
       path: academy-test.duckdb
-      threads: 1
+
+ # Ambiente de produção (BigQuery)
+    prod:
+      type: bigquery
+      method: service-account
+      project: academy-dbt-test
+      dataset: academy_dbt_prod 
+      keyfile: temp/academy-dbt-test-6eda8ac0ab9a.json  
+      location: US 

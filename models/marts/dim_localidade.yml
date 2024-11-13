@@ -1,0 +1,27 @@
+# marts/dim/dim_localidade.yml
+version: 2
+
+models:
+ - name: dim_localidade
+   description: "Dimensão de localidades contendo a hierarquia geográfica completa"
+   columns:
+     - name: SK_LOCALIDADE
+       description: "Chave surrogate da localidade"
+       tests:
+         - unique
+         - not_null
+
+     - name: ID_ENDERECO
+       description: "Identificador natural do endereço"
+
+     - name: CIDADE
+       description: "Nome da cidade"
+
+     - name: ESTADO
+       description: "Nome do estado"
+
+     - name: PAIS
+       description: "Nome do país"
+
+     - name: DW_DATA_CARGA
+       description: "Data e hora da carga do registro"

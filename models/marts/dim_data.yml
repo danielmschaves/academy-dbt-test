@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: dim_data
+    description: "Dimensão de tempo para análises temporais das vendas"
+    columns:
+      - name: SK_DATA
+        description: "Chave surrogate da data"
+        tests:
+          - unique
+          - not_null
+
+      - name: DATA_PEDIDO
+        description: "Data do pedido"
+        
+      - name: ANO
+        description: "Ano do pedido"
+
+      - name: MES
+        description: "Mês do pedido (número)"
+
+      - name: DIA
+        description: "Dia do pedido"
+
+      - name: NOME_MES
+        description: "Nome do mês em português"
+
+      - name: TRIMESTRE
+        description: "Trimestre do ano (1 a 4)"
+
+      - name: DW_DATA_CARGA
+        description: "Data e hora da carga do registro"

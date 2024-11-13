@@ -1,0 +1,23 @@
+version: 2
+
+models:
+ - name: dim_cartao
+   description: "Dimensão de cartões de crédito utilizados nas vendas"
+   columns:
+     - name: SK_CARTAO
+       description: "Chave surrogate do cartão"
+       tests:
+         - unique
+         - not_null
+
+     - name: ID_CARTAO
+       description: "Identificador natural do cartão"
+
+     - name: TIPO_CARTAO
+       description: "Tipo/Bandeira do cartão de crédito"
+
+     - name: NUMERO_CARTAO
+       description: "Número do cartão de crédito"
+
+     - name: DW_DATA_CARGA
+       description: "Data e hora da carga do registro"
