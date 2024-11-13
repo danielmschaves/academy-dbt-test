@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_clientes
+    description: "Dimensão de clientes"
+    columns:
+      - name: SK_CLIENTE
+        description: "Chave surrogate do cliente"
+        tests:
+          - unique
+          - not_null
+
+      - name: ID_CLIENTE
+        description: "Identificador natural do cliente"
+
+      - name: NOME_COMPLETO
+        description: "Nome completo do cliente"
+
+      - name: NOME
+        description: "Primeiro nome do cliente"
+
+      - name: SOBRENOME
+        description: "Sobrenome do cliente"
+
+      - name: DW_DATA_CARGA
+        description: "Data e hora da carga do registro"

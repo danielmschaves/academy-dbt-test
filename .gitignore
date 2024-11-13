@@ -7,3 +7,6 @@ academy-test.duckdb
 academy-test.duckdb.wal
 package-lock.yml
 poetry.lock
+.json
+temp/
+academy-dbt-test-6eda8ac0ab9a.json

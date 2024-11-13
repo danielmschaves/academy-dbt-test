@@ -14,7 +14,7 @@ addresses as (
        , postalcode as CEP
        , spatiallocation as LOCALIZACAO_ESPACIAL
        -- data e timestamp
-       , strptime(modifieddate, '%Y-%m-%d %H:%M:%S.%f') as DATA_MODIFICACAO
+       , cast(modifieddate as timestamp) as DATA_MODIFICACAO
        -- chave única
        , rowguid as ID_LINHA_UNICO
    from

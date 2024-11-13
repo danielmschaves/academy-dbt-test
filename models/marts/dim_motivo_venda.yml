@@ -1,0 +1,24 @@
+# marts/dim/dim_motivo_venda.yml
+version: 2
+
+models:
+ - name: dim_motivo_venda
+   description: "Dimensão de motivos de venda que classifica as razões das vendas realizadas"
+   columns:
+     - name: SK_MOTIVO_VENDA
+       description: "Chave surrogate do motivo de venda"
+       tests:
+         - unique
+         - not_null
+
+     - name: ID_MOTIVO_VENDA
+       description: "Identificador natural do motivo de venda"
+
+     - name: NOME_MOTIVO
+       description: "Nome do motivo de venda"
+
+     - name: TIPO_MOTIVO
+       description: "Classificação/Tipo do motivo de venda"
+
+     - name: DW_DATA_CARGA
+       description: "Data e hora da carga do registro"

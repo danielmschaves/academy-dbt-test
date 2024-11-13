@@ -1,0 +1,94 @@
+version: 2
+
+models:
+ - name: fato_vendas
+   description: "Tabela fato de vendas contendo todas as transações da Adventure Works"
+   columns:
+     # Chave Surrogate
+     - name: SK_VENDA
+       description: "Chave surrogate gerada para identificação única da venda"
+       tests:
+         - unique
+         - not_null
+
+     # Chaves Naturais
+     - name: ID_DETALHE_PEDIDO
+       description: "Identificador natural do detalhe do pedido"
+
+     - name: ID_PEDIDO
+       description: "Identificador natural do pedido"
+
+     # Foreign Keys
+     - name: FK_CLIENTE
+       description: "Chave estrangeira para dimensão de clientes"
+       tests:
+         - relationships:
+             to: ref('dim_clientes')
+             field: SK_CLIENTE
+
+     - name: FK_LOCALIDADE
+       description: "Chave estrangeira para dimensão de localidade"
+       tests:
+         - relationships:
+             to: ref('dim_localidade')
+             field: SK_LOCALIDADE
+
+     - name: FK_PRODUTO
+       description: "Chave estrangeira para dimensão de produtos"
+       tests:
+         - relationships:
+             to: ref('dim_produto')
+             field: SK_PRODUTO
+
+     - name: FK_MOTIVO_VENDA
+       description: "Chave estrangeira para dimensão de motivos de venda"
+       tests:
+         - relationships:
+             to: ref('dim_motivo_venda')
+             field: SK_MOTIVO_VENDA
+
+     - name: FK_CARTAO
+       description: "Chave estrangeira para dimensão de cartões"
+       tests:
+         - relationships:
+             to: ref('dim_cartao')
+             field: SK_CARTAO
+
+     - name: FK_DATA
+       description: "Chave estrangeira para dimensão de data"
+       tests:
+         - relationships:
+             to: ref('dim_data')
+             field: SK_DATA
+
+     # Métricas
+     - name: PRECO_UNITARIO
+       description: "Preço unitário do produto vendido"
+
+     - name: DESCONTO_UNITARIO
+       description: "Desconto unitário aplicado na venda"
+
+     - name: QUANTIDADE
+       description: "Quantidade vendida do produto"
+
+     - name: FRETE
+       description: "Valor do frete do pedido"
+
+     - name: SUBTOTAL
+       description: "Valor subtotal do pedido antes de impostos e frete"
+
+     - name: VALOR_IMPOSTO
+       description: "Valor total de impostos do pedido"
+
+     - name: VALOR_TOTAL
+       description: "Valor total do pedido incluindo impostos e frete"
+
+     - name: VALOR_LIQUIDO
+       description: "Valor líquido após aplicação de descontos"
+
+     # Flags
+     - name: FLAG_PEDIDO_ONLINE
+       description: "Indica se o pedido foi realizado online"
+
+     - name: STATUS
+       description: "Status atual do pedido"

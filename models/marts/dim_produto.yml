@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dim_produto
+    description: "Dimensão de produtos comercializados"
+    columns:
+      - name: SK_PRODUTO
+        description: "Chave surrogate do produto"
+        tests:
+          - unique
+          - not_null
+
+      - name: ID_PRODUTO
+        description: "Identificador natural do produto"
+
+      - name: NOME_PRODUTO
+        description: "Nome do produto"
+
+      - name: CODIGO_PRODUTO
+        description: "Código do produto"
+
+      - name: CUSTO_PADRAO
+        description: "Custo padrão do produto"
+
+      - name: PRECO_LISTA
+        description: "Preço de lista do produto"
+
+      - name: DW_DATA_CARGA
+        description: "Data e hora da carga do registro"
