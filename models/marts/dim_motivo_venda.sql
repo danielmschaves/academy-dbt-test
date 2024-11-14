@@ -4,7 +4,9 @@ with int_vendas_motivos as (
 dim_motivo_venda as (
     select 
         -- chave surrogate
-        {{ dbt_utils.generate_surrogate_key(['ID_PEDIDO']) }} as SK_MOTIVO_VENDA
+        {{ dbt_utils.generate_surrogate_key([
+            'ID_PEDIDO'
+        ]) }} as SK_MOTIVO_VENDA
         -- chaves naturais
         , ID_PEDIDO
         -- atributos
