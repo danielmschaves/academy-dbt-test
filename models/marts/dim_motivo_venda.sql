@@ -1,18 +1,13 @@
-with int_vendas_motivos as (
-    select * from {{ ref('int_vendas_motivos') }}
+with stg_motivo_venda as (
+    select * from {{ ref('stg_sap__motivo_venda') }}
 ),
 dim_motivo_venda as (
     select 
-        -- chave surrogate
-        {{ dbt_utils.generate_surrogate_key([
-            'ID_PEDIDO'
-        ]) }} as SK_MOTIVO_VENDA
-        -- chaves naturais
-        , ID_PEDIDO
-        -- atributos
-        , MOTIVOS_VENDA
-        -- metadados
+        {{ dbt_utils.generate_surrogate_key(['ID_MOTIVO_VENDA']) }} as SK_MOTIVO_VENDA
+        , ID_MOTIVO_VENDA
+        , NOME_MOTIVO
+        , TIPO_MOTIVO
         , current_timestamp() as DW_DATA_CARGA
-    from int_vendas_motivos
+    from stg_motivo_venda
 )
 select * from dim_motivo_venda
