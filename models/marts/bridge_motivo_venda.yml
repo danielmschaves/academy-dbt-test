@@ -1,0 +1,28 @@
+version: 2
+
+models:
+ - name: bridge_motivo_venda
+   description: "Tabela bridge que relaciona pedidos com seus motivos de venda"
+   columns:
+     - name: SK_BRIDGE_MOTIVO
+       description: "Chave surrogate única para cada combinação de pedido e motivo"
+       tests:
+         - unique
+         - not_null
+
+     - name: ID_PEDIDO
+       description: "Identificador do pedido"
+       tests:
+         - not_null
+         - relationships:
+             to: ref('fato_vendas')
+             field: ID_PEDIDO
+
+     - name: ID_MOTIVO_VENDA
+       description: "Identificador do motivo de venda"
+
+     - name: NOME_MOTIVO
+       description: "Nome descritivo do motivo de venda"
+
+     - name: TIPO_MOTIVO
+       description: "Classificação/tipo do motivo de venda"

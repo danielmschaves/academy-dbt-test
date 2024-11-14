@@ -1,4 +1,3 @@
--- dim_motivo_venda
 with int_vendas_motivos as (
     select * from {{ ref('int_vendas_motivos') }}
 ),

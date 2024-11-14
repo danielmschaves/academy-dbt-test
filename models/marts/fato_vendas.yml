@@ -40,13 +40,6 @@ models:
              to: ref('dim_produto')
              field: SK_PRODUTO
 
-     - name: FK_MOTIVO_VENDA
-       description: "Chave estrangeira para dimensão de motivos de venda"
-       tests:
-         - relationships:
-             to: ref('dim_motivo_venda')
-             field: SK_MOTIVO_VENDA
-
      - name: FK_CARTAO
        description: "Chave estrangeira para dimensão de cartões"
        tests:
