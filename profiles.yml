@@ -14,3 +14,15 @@ academy_dbt_test:
       dataset: academy_dbt_prod 
       keyfile: temp/academy-dbt-test-6eda8ac0ab9a.json  
       location: US 
+
+  # Novo ambiente Snowflake
+    snowflake:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE') }}"  
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      schema: "DEFAULT"
+      threads: 1

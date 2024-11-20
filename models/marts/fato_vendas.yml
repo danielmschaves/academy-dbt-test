@@ -4,21 +4,18 @@ models:
  - name: fato_vendas
    description: "Tabela fato de vendas contendo todas as transações da Adventure Works"
    columns:
-     # Chave Surrogate
      - name: SK_VENDA
        description: "Chave surrogate gerada para identificação única da venda"
        tests:
          - unique
          - not_null
 
-     # Chaves Naturais
      - name: ID_DETALHE_PEDIDO
        description: "Identificador natural do detalhe do pedido"
 
      - name: ID_PEDIDO
        description: "Identificador natural do pedido"
 
-     # Foreign Keys
      - name: FK_CLIENTE
        description: "Chave estrangeira para dimensão de clientes"
        tests:
@@ -54,7 +51,6 @@ models:
              to: ref('dim_data')
              field: SK_DATA
 
-     # Métricas
      - name: PRECO_UNITARIO
        description: "Preço unitário do produto vendido"
 
@@ -79,7 +75,6 @@ models:
      - name: VALOR_LIQUIDO
        description: "Valor líquido após aplicação de descontos"
 
-     # Flags
      - name: FLAG_PEDIDO_ONLINE
        description: "Indica se o pedido foi realizado online"
 

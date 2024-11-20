@@ -10,3 +10,7 @@ poetry.lock
 .json
 temp/
 academy-dbt-test-6eda8ac0ab9a.json
+.env
+dbt_env_setup.py
+poetry.toml
+poetry.env
