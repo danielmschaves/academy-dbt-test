@@ -13,8 +13,20 @@ models:
       - name: ID_PRODUTO
         description: "Identificador natural do produto"
 
+      - name: ID_CATEGORIA
+        description: "Identificador natural da categoria do produto"
+
+      - name: ID_SUBCATEGORIA
+        description: "Identificador natural da subcategoria do produto"
+
       - name: NOME_PRODUTO
         description: "Nome do produto"
+
+      - name: NOME_CATEGORIA
+        description: "Nome da categoria do produto"
+
+      - name: NOME_SUBCATEGORIA
+        description: "Nome da subcategoria do produto"
 
       - name: CODIGO_PRODUTO
         description: "Código do produto"
@@ -24,6 +36,15 @@ models:
 
       - name: PRECO_LISTA
         description: "Preço de lista do produto"
+
+      - name: PESO
+        description: "Peso do produto"
+
+      - name: DATA_INICIO_VENDA
+        description: "Data de início da venda do produto"
+
+      - name: DATA_FIM_VENDA
+        description: "Data de fim da venda do produto"
 
       - name: DW_DATA_CARGA
         description: "Data e hora da carga do registro"
