@@ -36,7 +36,7 @@ docs:
 	dbt docs serve
 
 # Comandos específicos
-.PHONY: stage intermediate staging marts test_marts build_marts build_stg build_int
+.PHONY: stage intermediate staging marts test_marts build_marts build_stg build_int run_fact
 
 intermediate:
 	dbt run --select intermediate --target prod
@@ -58,6 +58,9 @@ build_stg:
 
 build_int:
 	dbt build --select intermediate --target prod	
+
+run_fact:
+	dbt build --select fato_vendas --target prod
 
 # Comandos compostos
 .PHONY: full-build full-refresh

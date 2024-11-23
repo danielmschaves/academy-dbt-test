@@ -57,7 +57,8 @@ fato_vendas as (
         , vp.QUANTIDADE
         , vp.VALOR_BRUTO
         , vp.VALOR_LIQUIDO
-        , vp.VALOR_TOTAL
+        -- datas
+        , cast(vp.DATA_PEDIDO as date) as DATA_PEDIDO
         -- flags
         , vp.FLAG_PEDIDO_ONLINE
         , vp.STATUS

@@ -6,12 +6,15 @@ stg_motivo_venda as (
 ),
 bridge_motivo_venda as (
    select
+       -- chave surrogate
        {{ dbt_utils.generate_surrogate_key([
          'pmv.ID_PEDIDO',
          'mv.ID_MOTIVO_VENDA'
          ]) }} as SK_BRIDGE_MOTIVO
-       , pmv.ID_PEDIDO
+       -- chaves naturais
+       , pmv.ID_PEDIDO 
        , mv.ID_MOTIVO_VENDA
+       -- atributos
        , mv.NOME_MOTIVO
        , mv.TIPO_MOTIVO
    from stg_pedido_motivo_venda pmv

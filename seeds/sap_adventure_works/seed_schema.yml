@@ -1,5 +1,9 @@
 version: 2
 
+config:
+  docs:
+    show: false
+
 seeds:
   - name: billofmaterials
     config:

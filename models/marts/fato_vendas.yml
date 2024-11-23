@@ -69,11 +69,14 @@ models:
      - name: VALOR_IMPOSTO
        description: "Valor total de impostos do pedido"
 
-     - name: VALOR_TOTAL
+     - name: VALOR_BRUTO
        description: "Valor total do pedido incluindo impostos e frete"
 
      - name: VALOR_LIQUIDO
        description: "Valor líquido após aplicação de descontos"
+
+     - name: DATA_PEDIDO
+       description: "Data do pedido"
 
      - name: FLAG_PEDIDO_ONLINE
        description: "Indica se o pedido foi realizado online"
