@@ -21,7 +21,7 @@ seeds:
 	dbt seeds
 
 build:
-	dbt build --exclude seeds
+	dbt build 
 
 test:
 	dbt test
