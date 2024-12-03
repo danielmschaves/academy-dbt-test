@@ -49,6 +49,11 @@ default:
   target: dev
 ```
 
+5. Verifique a configuração executando:
+```bash
+dbt debug
+```
+
 ## Comandos Make Disponíveis
 
 ### Comandos Básicos
@@ -57,7 +62,7 @@ default:
 # Instalar dependências do DBT
 make deps
 
-# Construir todos os modelos (exceto seeds)
+# Construir todos os modelos 
 make build
 
 # Executar todos os testes
