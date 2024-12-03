@@ -1,13 +1,8 @@
 academy_dbt_test:
   target: dev  # ambiente padrão
   outputs:
-    # Ambiente de desenvolvimento (DuckDB)
+    # Ambiente de desenvolvimento 
     dev:
-      type: duckdb
-      path: academy-test.duckdb
-
- # Ambiente de produção (BigQuery)
-    prod:
       type: bigquery
       method: service-account
       project: academy-dbt-test
@@ -15,14 +10,3 @@ academy_dbt_test:
       keyfile: temp/academy-dbt-test-6eda8ac0ab9a.json  
       location: US 
 
-  # Novo ambiente Snowflake
-    snowflake:
-      type: snowflake
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
-      user: "{{ env_var('SNOWFLAKE_USER') }}"
-      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
-      role: "{{ env_var('SNOWFLAKE_ROLE') }}"  
-      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
-      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
-      schema: "DEFAULT"
-      threads: 1
