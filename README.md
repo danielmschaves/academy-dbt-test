@@ -1,25 +1,133 @@
-# Indicium Academy
+# Desafio Certificação Analytics Engineer - Indicium Academy
 
-Repositório para ser utilizado no desafio para a obtenção da certificação de Analytics Engineer by Indicium. Faça o fork deste repositório e o utilize durante o desafio para fazer a insgestão das tabelas do SAP do Adventure Works.
+Este repositório contém o projeto para a certificação de Analytics Engineer da Indicium Academy. O objetivo é realizar a ingestão e transformação dos dados do SAP da Adventure Works utilizando DBT Core e BigQuery.
 
-## Instruções
+## Pré-requisitos
 
-Todas as tabelas do banco fonte do SAP da Adventure Works serão carregadas como seeds pelo dbt. Os arquivos .csv com os dados já estão na pasta de seeds.
+- Python 3.8+
+- Poetry (já instalado no ambiente)
+- Conta Google Cloud com acesso ao BigQuery
+- Git
+- Make
 
-Para fazer o carregamento de todas as tabelas usem o comando:
-- `dbt seed`
+## Configuração do Ambiente
 
-Para carregar uma tabela especifíca utilizem o comando
-- `dbt seed -s nome_do_csv`
+### 1. Clone o Repositório
 
-### Problemas comuns
+```bash
+git clone <url-do-repositorio>
+cd <nome-do-diretorio>
+```
 
-Em caso a linha de comando do dbt fique com o status de estar sempre carregando, ou, o job do comando `dbt seed` fique rodando indefinitivamente mesmo após as 64 tabelas forem carregadas você precisará reiniciar o terminal. Para isso, clique nos três pontos no canto inferior direito ou no lado direito da linha de comando e escolha a opção `Restart IDE`.
+### 2. Ativação do Ambiente Virtual
 
+```bash
+# Ativar ambiente virtual do Poetry
+poetry shell
 
-## Recursos:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [dbt community](http://community.getbdt.com/) to learn from other analytics engineers
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+# Instalar dependências do projeto
+poetry install
+```
+
+### 3. Configuração do BigQuery
+
+1. Faça o download do arquivo de credenciais (.json) do seu projeto no BigQuery
+2. Crie uma pasta `temp` no diretório raiz do projeto
+3. Mova o arquivo de credenciais para a pasta `temp`
+4. Configure o arquivo `profiles.yml` na pasta `~/.dbt/` com as seguintes informações:
+
+```yaml
+default:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: nome-do-projeto
+      dataset: nome-do-dataset 
+      keyfile: temp/keyfile.json  
+      location: US
+  target: dev
+```
+
+## Comandos Make Disponíveis
+
+### Comandos Básicos
+
+```bash
+# Instalar dependências do DBT
+make deps
+
+# Construir todos os modelos (exceto seeds)
+make build
+
+# Executar todos os testes
+make test
+
+# Limpar arquivos temporários e caches
+make clean
+
+# Gerar e servir documentação
+make docs
+
+# Build completo (deps + build + test + docs)
+make full-build
+```
+
+### Comandos por Camada
+
+```bash
+# Construir modelos de staging
+make build_stg
+
+# Construir modelos intermediários
+make build_int
+
+# Construir modelos marts
+make build_marts
+
+# Testar apenas marts
+make test_marts
+
+# Construir tabela fato_vendas
+make run_fact
+```
+
+## Carregamento dos Dados (Seeds)
+
+O projeto utiliza os dados do SAP da Adventure Works disponibilizados como seeds no DBT.
+
+```bash
+# Carregar todas as tabelas
+make seeds
+```
+
+## Camadas do Projeto
+
+- `staging/`: Primeira camada de transformação, padronização e limpeza dos dados brutos
+- `intermediate/`: Camada para transformações intermediárias e preparação para os marts
+- `marts/`: Modelos dimensionais finais organizados por assunto
+
+## Documentação
+
+Para gerar e visualizar a documentação do projeto:
+
+```bash
+make docs
+```
+
+A documentação ficará disponível em http://localhost:8080
+
+## Solução de Problemas
+
+- Se o comando `dbt seed` ficar executando indefinidamente mesmo após o carregamento das 64 tabelas, será necessário reiniciar o terminal.
+
+- Em caso de problemas de conexão com o BigQuery, verifique:
+  - Se o arquivo de credenciais (.json) está no caminho correto especificado no profiles.yml
+  - Se o projeto e dataset do BigQuery existem e você tem as permissões necessárias
+  - Se o arquivo profiles.yml está configurado corretamente
+
+## Documentação e Recursos
+
+- [Documentação do DBT](https://docs.getdbt.com/docs/introduction)
+- [Documentação do BigQuery](https://cloud.google.com/bigquery/docs)
+- [Fórum da Comunidade DBT](https://discourse.getdbt.com/)

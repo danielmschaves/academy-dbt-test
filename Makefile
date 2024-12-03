@@ -9,15 +9,16 @@ PROFILE = academy_dbt_test
 
 dev:
 	dbt run --target dev
-
-prod:
-	dbt run --target prod
+ 
 
 # Comandos básicos
-.PHONY: deps build test clean docs
+.PHONY: deps build test clean docs seeds
 
 deps:
 	dbt deps
+
+seeds:
+	dbt seeds
 
 build:
 	dbt build --exclude seeds
@@ -39,28 +40,28 @@ docs:
 .PHONY: stage intermediate staging marts test_marts build_marts build_stg build_int run_fact
 
 intermediate:
-	dbt run --select intermediate --target prod
+	dbt run --select intermediate 
 
 staging:
-	dbt run --select staging --target prod
+	dbt run --select staging 
 
 marts:
-	dbt run --select marts --target prod
+	dbt run --select marts 
 
 test_marts:
-	dbt test --select marts --target prod	
+	dbt test --select marts 	
 
 build_marts:
-	dbt build --select marts --target prod	
+	dbt build --select marts 	
 
 build_stg:
-	dbt build --select staging --target prod	
+	dbt build --select staging 	
 
 build_int:
-	dbt build --select intermediate --target prod	
+	dbt build --select intermediate 	
 
 run_fact:
-	dbt build --select fato_vendas --target prod
+	dbt build --select fato_vendas 
 
 # Comandos compostos
 .PHONY: full-build full-refresh
