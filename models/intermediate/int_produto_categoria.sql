@@ -1,4 +1,3 @@
--- intermediate/int_produto_categoria.sql
 with stg_produto as (
    select * from {{ ref('stg_sap__produto') }}
 ),

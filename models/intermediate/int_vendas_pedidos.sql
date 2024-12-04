@@ -1,4 +1,3 @@
--- int_vendas_pedidos.sql
 with stg_pedido_vendas as (
    select * from {{ ref('stg_sap__pedido_venda') }}
 ),

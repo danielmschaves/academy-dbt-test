@@ -51,7 +51,7 @@ default:
 
 5. Verifique a configuração executando:
 ```bash
-dbt debug
+make debug
 ```
 
 ## Comandos Make Disponíveis
@@ -67,9 +67,6 @@ make build
 
 # Executar todos os testes
 make test
-
-# Limpar arquivos temporários e caches
-make clean
 
 # Gerar e servir documentação
 make docs

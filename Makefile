@@ -12,7 +12,7 @@ dev:
  
 
 # Comandos básicos
-.PHONY: deps build test clean docs seeds
+.PHONY: deps build test clean docs seeds debug
 
 deps:
 	dbt deps
@@ -35,6 +35,9 @@ clean:
 docs:
 	dbt docs generate
 	dbt docs serve
+
+debug:
+	dbt debug
 
 # Comandos específicos
 .PHONY: stage intermediate staging marts test_marts build_marts build_stg build_int run_fact
