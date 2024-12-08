@@ -2,6 +2,13 @@
 
 Este repositório contém o projeto para a certificação de Analytics Engineer da Indicium Academy. O objetivo é realizar a ingestão e transformação dos dados do SAP da Adventure Works utilizando DBT Core e BigQuery.
 
+## Dashboard do Projeto
+
+O dashboard com as análises e visualizações dos dados pode ser acessado através do link abaixo:
+[Adventure Works Dashboard](https://drive.google.com/file/d/1P5sIFxPpFo0O0Vb3xIx0Xd5AipQMJtO5/view?usp=sharing)
+
+**Nota:** É necessário solicitar acesso ao dashboard através do link fornecido.
+
 ## Pré-requisitos
 
 - Python 3.8+
