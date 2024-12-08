@@ -33,7 +33,7 @@ clean:
 	rm -rf logs/
 
 docs:
-	dbt docs generate
+	dbt docs generate 
 	dbt docs serve
 
 debug:

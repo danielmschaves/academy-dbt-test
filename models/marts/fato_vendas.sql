@@ -59,7 +59,7 @@ fato_vendas as (
         , vp.VALOR_LIQUIDO
         -- datas
         , cast(vp.DATA_PEDIDO as date) as DATA_PEDIDO
-        -- categoria
+        -- atributos
         , vp.TIPO_CARTAO
         -- flags
         , vp.FLAG_PEDIDO_ONLINE
