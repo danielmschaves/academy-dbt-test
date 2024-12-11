@@ -7,7 +7,12 @@ Este repositório contém o projeto para a certificação de Analytics Engineer 
 O dashboard com as análises e visualizações dos dados pode ser acessado através do link abaixo:
 [Adventure Works Dashboard](https://drive.google.com/file/d/1P5sIFxPpFo0O0Vb3xIx0Xd5AipQMJtO5/view?usp=sharing)
 
-**Nota:** É necessário solicitar acesso ao dashboard através do link fornecido.
+
+## Modelo Conceitual
+
+O modelo conceitual do projeto pode ser acessado através do link abaixo:
+[Modelo Conceitual](https://drive.google.com/file/d/1ltGTRQKS7peliVuWBNowrY_ltx8IU8oJ/view?usp=sharing)
+
 
 ## Pré-requisitos
 
@@ -22,8 +27,8 @@ O dashboard com as análises e visualizações dos dados pode ser acessado atrav
 ### 1. Clone o Repositório
 
 ```bash
-git clone <url-do-repositorio>
-cd <nome-do-diretorio>
+git clone https://github.com/danielmschaves/academy-dbt-test.git
+cd academy-dbt-test
 ```
 
 ### 2. Ativação do Ambiente Virtual
