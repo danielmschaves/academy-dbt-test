@@ -1,3 +1,14 @@
+{{
+    config(
+        partition_by = {
+            'field': 'DATA_PEDIDO',
+            'data_type': 'date',
+            'granularity': 'month'
+        },
+        cluster_by = ['FK_PRODUTO', 'FK_CLIENTE']
+    )
+}}
+
 with vendas_pedidos as (
     select * from {{ ref('int_vendas_pedidos') }}
 ),

@@ -91,25 +91,3 @@ models:
         description: True se o pedido foi realizado pelo canal online.
       - name: DATA_PEDIDO
         description: Data e hora do pedido.
-
-  - name: int_vendas_metricas
-    description: >
-      Estende int_vendas_pedidos com métricas de janela (window functions):
-      sequência de compra por cliente, receita acumulada, dias desde último pedido
-      e ranking de itens por produto. Base para mart_performance_cliente.
-    columns:
-      - name: ID_DETALHE_PEDIDO
-        description: Chave primária do item (herdada de int_vendas_pedidos).
-        tests:
-          - unique
-          - not_null
-      - name: NUMERO_PEDIDO_CLIENTE
-        description: Posição cronológica deste pedido na história de compras do cliente.
-      - name: RECEITA_ACUMULADA_CLIENTE
-        description: Soma acumulada de VALOR_BRUTO do cliente até este pedido.
-      - name: DATA_PEDIDO_ANTERIOR
-        description: Data do pedido imediatamente anterior do mesmo cliente.
-      - name: DIAS_DESDE_ULTIMO_PEDIDO
-        description: Diferença em dias entre DATA_PEDIDO e DATA_PEDIDO_ANTERIOR.
-      - name: RANK_VALOR_PRODUTO
-        description: Ranking deste item pelo maior VALOR_BRUTO dentro do mesmo produto.
