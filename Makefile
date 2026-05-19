@@ -1,72 +1,68 @@
 # Makefile
 
-# Variáveis
 PROJECT_DIR = .
 PROFILE = academy_dbt_test
 
-# Ambientes
-.PHONY: dev prod
+# ── Setup ────────────────────────────────────────────────────────────────────
+.PHONY: install deps debug
 
-dev:
-	dbt run --target dev
- 
-
-# Comandos básicos
-.PHONY: deps build test clean docs seeds debug
+install:
+	uv sync
 
 deps:
 	dbt deps
 
+debug:
+	dbt debug
+
+# ── Core dbt ─────────────────────────────────────────────────────────────────
+.PHONY: seeds build test docs clean
+
 seeds:
-	dbt seeds
+	dbt seed
 
 build:
-	dbt build 
+	dbt build
 
 test:
 	dbt test
 
-clean:
-	dbt clean
-	rm -rf target/
-	rm -rf dbt_packages/
-	rm -rf logs/
-
 docs:
-	dbt docs generate 
+	dbt docs generate
 	dbt docs serve
 
-debug:
-	dbt debug
+clean:
+	dbt clean
+	rm -rf target/ dbt_packages/ logs/
 
-# Comandos específicos
-.PHONY: stage intermediate staging marts test_marts build_marts build_stg build_int run_fact
-
-intermediate:
-	dbt run --select intermediate 
-
-staging:
-	dbt run --select staging 
-
-marts:
-	dbt run --select marts 
-
-test_marts:
-	dbt test --select marts 	
-
-build_marts:
-	dbt build --select marts 	
+# ── Layer targets ─────────────────────────────────────────────────────────────
+.PHONY: build_stg build_int build_marts test_marts run_fact
 
 build_stg:
-	dbt build --select staging 	
+	dbt build --select staging
 
 build_int:
-	dbt build --select intermediate 	
+	dbt build --select intermediate
+
+build_marts:
+	dbt build --select marts
+
+test_marts:
+	dbt test --select marts
 
 run_fact:
-	dbt build --select fato_vendas 
+	dbt build --select fato_vendas
 
-# Comandos compostos
+# ── Code quality ──────────────────────────────────────────────────────────────
+.PHONY: lint fix
+
+lint:
+	sqlfluff lint models/
+
+fix:
+	sqlfluff fix models/
+
+# ── Composite ─────────────────────────────────────────────────────────────────
 .PHONY: full-build full-refresh
 
 full-build: deps build test docs
