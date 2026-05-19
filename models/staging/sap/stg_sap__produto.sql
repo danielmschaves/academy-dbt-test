@@ -8,7 +8,6 @@ products as (
         , productsubcategoryid as ID_SUBCATEGORIA
         -- textos
         , name as NOME_PRODUTO
-        , name as NOME_SUBCATEGORIA
         , productnumber as CODIGO_PRODUTO
         -- valores
         , standardcost as CUSTO_PADRAO

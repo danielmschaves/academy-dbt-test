@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: mart_performance_cliente
+    description: >
+      Agregação analítica por cliente. Consolida total de pedidos, receita,
+      ticket médio, janela de compra e frequência. Usa NTILE(4) para segmentar
+      clientes em quartis de receita — útil para análise RFM e campanhas de CRM.
+    columns:
+      - name: SK_CLIENTE
+        description: Chave surrogate do cliente (FK para dim_clientes).
+        tests:
+          - unique
+          - not_null
+      - name: ID_CLIENTE
+        description: Identificador natural do cliente.
+      - name: NOME_COMPLETO
+        description: Nome completo do cliente.
+      - name: TOTAL_PEDIDOS
+        description: Número de pedidos distintos realizados pelo cliente.
+      - name: TOTAL_ITENS
+        description: Número total de itens (linhas de detalhe) comprados.
+      - name: RECEITA_BRUTA_TOTAL
+        description: Soma de VALOR_BRUTO de todos os itens do cliente.
+      - name: RECEITA_LIQUIDA_TOTAL
+        description: Soma de VALOR_LIQUIDO de todos os itens do cliente.
+      - name: TICKET_MEDIO_ITEM
+        description: Média de VALOR_BRUTO por item comprado.
+      - name: DATA_PRIMEIRO_PEDIDO
+        description: Data do primeiro pedido do cliente.
+      - name: DATA_ULTIMO_PEDIDO
+        description: Data do pedido mais recente do cliente.
+      - name: DIAS_COMO_CLIENTE
+        description: Diferença em dias entre o primeiro e o último pedido.
+      - name: MEDIA_DIAS_ENTRE_PEDIDOS
+        description: Média de dias entre pedidos consecutivos do cliente.
+      - name: PEDIDOS_ONLINE
+        description: Quantidade de pedidos realizados pelo canal online.
+      - name: PEDIDOS_PRESENCIAIS
+        description: Quantidade de pedidos realizados pelo canal presencial.
+      - name: QUARTIL_RECEITA
+        description: >
+          Segmento de receita do cliente (1=top 25%, 4=bottom 25%).
+          Calculado via NTILE(4) sobre RECEITA_BRUTA_TOTAL.
+      - name: RANK_RECEITA_GLOBAL
+        description: Posição do cliente no ranking global de receita (1 = maior receita).
+      - name: DW_DATA_CARGA
+        description: Data e hora da carga do registro no data warehouse.
