@@ -2,25 +2,27 @@ version: 2
 
 models:
   - name: dim_clientes
-    description: "Dimensão de clientes"
+    description: >
+      Dimensão de clientes. Combina dados cadastrais de pessoa física com
+      o território de vendas associado ao cliente.
     columns:
       - name: SK_CLIENTE
-        description: "Chave surrogate do cliente"
+        description: Chave surrogate do cliente.
         tests:
           - unique
           - not_null
-
       - name: ID_CLIENTE
-        description: "Identificador natural do cliente"
-
-      - name: NOME_COMPLETO
-        description: "Nome completo do cliente"
-
+        description: Identificador natural do cliente (businessentityid).
+        tests:
+          - unique
+          - not_null
+      - name: ID_TERRITORIO
+        description: Território de vendas ao qual o cliente pertence.
       - name: NOME
-        description: "Primeiro nome do cliente"
-
+        description: Primeiro nome do cliente.
       - name: SOBRENOME
-        description: "Sobrenome do cliente"
-
+        description: Sobrenome do cliente.
+      - name: NOME_COMPLETO
+        description: Nome e sobrenome concatenados.
       - name: DW_DATA_CARGA
-        description: "Data e hora da carga do registro"
+        description: Timestamp de carga do registro no data warehouse.

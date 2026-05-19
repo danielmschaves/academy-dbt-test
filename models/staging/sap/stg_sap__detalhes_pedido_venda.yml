@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_sap__detalhes_pedido_venda
+    description: >
+      Itens individuais de cada pedido de venda (salesorderdetail).
+      Cada linha representa um produto dentro de um pedido.
+    columns:
+      - name: ID_DETALHE_PEDIDO
+        description: Chave primária do detalhe do pedido.
+        tests:
+          - unique
+          - not_null
+      - name: ID_PEDIDO
+        description: Chave estrangeira para o cabeçalho do pedido.
+        tests:
+          - not_null
+      - name: ID_PRODUTO
+        description: Chave estrangeira para o produto vendido.
+      - name: ID_OFERTA_ESPECIAL
+        description: Chave estrangeira para a oferta especial aplicada.
+      - name: CODIGO_RASTREAMENTO
+        description: Código de rastreamento da transportadora.
+      - name: PRECO_UNITARIO
+        description: Preço unitário do produto no momento da venda.
+      - name: DESCONTO_UNITARIO
+        description: Percentual de desconto aplicado ao preço unitário (0 a 1).
+      - name: QUANTIDADE
+        description: Quantidade de unidades do produto no pedido.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
+      - name: ID_LINHA_UNICO
+        description: Identificador único global do registro (rowguid).

@@ -1,85 +1,65 @@
 version: 2
 
 models:
- - name: fato_vendas
-   description: "Tabela fato de vendas contendo todas as transações da Adventure Works"
-   columns:
-     - name: SK_VENDA
-       description: "Chave surrogate gerada para identificação única da venda"
-       tests:
-         - unique
-         - not_null
-
-     - name: ID_DETALHE_PEDIDO
-       description: "Identificador natural do detalhe do pedido"
-
-     - name: ID_PEDIDO
-       description: "Identificador natural do pedido"
-
-     - name: FK_CLIENTE
-       description: "Chave estrangeira para dimensão de clientes"
-       tests:
-         - relationships:
-             to: ref('dim_clientes')
-             field: SK_CLIENTE
-
-     - name: FK_LOCALIDADE
-       description: "Chave estrangeira para dimensão de localidade"
-       tests:
-         - relationships:
-             to: ref('dim_localidade')
-             field: SK_LOCALIDADE
-
-     - name: FK_PRODUTO
-       description: "Chave estrangeira para dimensão de produtos"
-       tests:
-         - relationships:
-             to: ref('dim_produto')
-             field: SK_PRODUTO
-
-     - name: FK_CARTAO
-       description: "Chave estrangeira para dimensão de cartões"
-       tests:
-         - relationships:
-             to: ref('dim_cartao')
-             field: SK_CARTAO
-
-     - name: FK_DATA
-       description: "Chave estrangeira para dimensão de data"
-       tests:
-         - relationships:
-             to: ref('dim_data')
-             field: SK_DATA
-
-     - name: PRECO_UNITARIO
-       description: "Preço unitário do produto vendido"
-
-     - name: DESCONTO_UNITARIO
-       description: "Desconto unitário aplicado na venda"
-
-     - name: QUANTIDADE
-       description: "Quantidade vendida do produto"
-
-     - name: FRETE
-       description: "Valor do frete do pedido"
-
-     - name: SUBTOTAL
-       description: "Valor subtotal do pedido antes de impostos e frete"
-
-     - name: VALOR_IMPOSTO
-       description: "Valor total de impostos do pedido"
-
-     - name: VALOR_BRUTO
-       description: "Valor total do pedido incluindo impostos e frete"
-
-     - name: VALOR_LIQUIDO
-       description: "Valor líquido após aplicação de descontos"
-
-     - name: DATA_PEDIDO
-       description: "Data do pedido"
-
-     - name: FLAG_PEDIDO_ONLINE
-       description: "Indica se o pedido foi realizado online"
-
-     - name: STATUS
-       description: "Status atual do pedido"
+  - name: fato_vendas
+    description: >
+      Tabela fato de vendas — grain: um registro por item de pedido.
+      Chaves surrogate conectam todas as dimensões do modelo estrela.
+    columns:
+      - name: SK_VENDA
+        description: Chave surrogate gerada a partir de ID_DETALHE_PEDIDO + ID_PEDIDO.
+        tests:
+          - unique
+          - not_null
+      - name: ID_DETALHE_PEDIDO
+        description: Identificador natural do item de pedido.
+      - name: ID_PEDIDO
+        description: Identificador natural do pedido.
+      - name: FK_CLIENTE
+        description: Chave estrangeira para dim_clientes.
+        tests:
+          - relationships:
+              to: ref('dim_clientes')
+              field: SK_CLIENTE
+      - name: FK_LOCALIDADE
+        description: Chave estrangeira para dim_localidade (endereço de cobrança).
+        tests:
+          - relationships:
+              to: ref('dim_localidade')
+              field: SK_LOCALIDADE
+      - name: FK_PRODUTO
+        description: Chave estrangeira para dim_produto.
+        tests:
+          - relationships:
+              to: ref('dim_produto')
+              field: SK_PRODUTO
+      - name: FK_CARTAO
+        description: Chave estrangeira para dim_cartao.
+        tests:
+          - relationships:
+              to: ref('dim_cartao')
+              field: SK_CARTAO
+      - name: FK_DATA
+        description: Chave estrangeira para dim_data.
+        tests:
+          - relationships:
+              to: ref('dim_data')
+              field: SK_DATA
+      - name: PRECO_UNITARIO
+        description: Preço unitário do produto vendido.
+      - name: DESCONTO_UNITARIO
+        description: Percentual de desconto aplicado (0 a 1).
+      - name: QUANTIDADE
+        description: Quantidade vendida do produto.
+      - name: VALOR_BRUTO
+        description: "PRECO_UNITARIO × QUANTIDADE."
+      - name: VALOR_LIQUIDO
+        description: "PRECO_UNITARIO × QUANTIDADE × (1 − DESCONTO_UNITARIO)."
+      - name: TIPO_CARTAO
+        description: Bandeira do cartão utilizado; 'Sem Cartão' quando não informado.
+      - name: DATA_PEDIDO
+        description: Data do pedido (cast para DATE).
+      - name: FLAG_PEDIDO_ONLINE
+        description: True se o pedido foi realizado pelo canal online.
+      - name: STATUS
+        description: Status do pedido decodificado (Em Processo, Aprovado, Pendente, etc.).

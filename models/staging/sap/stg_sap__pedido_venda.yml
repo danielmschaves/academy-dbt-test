@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: stg_sap__pedido_venda
+    description: >
+      Cabeçalho dos pedidos de venda da Adventure Works (salesorderheader).
+      Renomeia colunas para português e padroniza datas como timestamp.
+    columns:
+      - name: ID_PEDIDO
+        description: Chave primária do pedido de venda.
+        tests:
+          - unique
+          - not_null
+      - name: ID_CLIENTE
+        description: Chave estrangeira para o cliente.
+      - name: ID_VENDEDOR
+        description: Chave estrangeira para o vendedor.
+      - name: ID_TERRITORIO
+        description: Chave estrangeira para o território de vendas.
+      - name: ID_ENDERECO_COBRANCA
+        description: Endereço de cobrança do pedido.
+      - name: ID_ENDERECO_ENTREGA
+        description: Endereço de entrega do pedido.
+      - name: ID_METODO_ENTREGA
+        description: Método de entrega do pedido.
+      - name: ID_CARTAO_CREDITO
+        description: Chave estrangeira para o cartão de crédito utilizado.
+      - name: ID_TAXA_CAMBIO
+        description: Chave estrangeira para a taxa de câmbio aplicada.
+      - name: NUMERO_CONTA
+        description: Número de conta financeira do pedido.
+      - name: CODIGO_APROVACAO_CARTAO
+        description: Código de aprovação do cartão de crédito.
+      - name: FRETE
+        description: Valor do frete do pedido.
+      - name: NUMERO_ORDEM_COMPRA
+        description: Número de ordem de compra do cliente.
+      - name: NUMERO_REVISAO
+        description: Número de revisão do pedido.
+      - name: STATUS
+        description: Código numérico do status do pedido (1=Em Processo, 2=Aprovado, etc.).
+      - name: SUBTOTAL
+        description: Valor subtotal antes de impostos e frete.
+      - name: VALOR_IMPOSTO
+        description: Valor total de impostos aplicados.
+      - name: VALOR_TOTAL
+        description: Valor total do pedido incluindo impostos e frete.
+      - name: FLAG_PEDIDO_ONLINE
+        description: Indica se o pedido foi realizado pelo canal online.
+      - name: DATA_VENCIMENTO
+        description: Data de vencimento do pedido.
+      - name: DATA_PEDIDO
+        description: Data de realização do pedido.
+      - name: DATA_ENVIO
+        description: Data de envio do pedido.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
+      - name: ID_LINHA_UNICO
+        description: Identificador único global do registro (rowguid).

@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_sap__cartao_credito
+    description: Informações de cartões de crédito utilizados pelos clientes (creditcard).
+    columns:
+      - name: ID_CARTAO
+        description: Chave primária do cartão de crédito.
+        tests:
+          - unique
+          - not_null
+      - name: TIPO_CARTAO
+        description: Bandeira do cartão (Vista, SuperiorCard, Distinguish, ColonialVoice).
+      - name: NUMERO_CARTAO
+        description: Número mascarado do cartão de crédito.
+      - name: MES_EXPIRACAO
+        description: Mês de expiração do cartão.
+      - name: ANO_EXPIRACAO
+        description: Ano de expiração do cartão.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_sap__categoria
+    description: Categorias de alto nível dos produtos (productcategory).
+    columns:
+      - name: ID_CATEGORIA
+        description: Chave primária da categoria.
+        tests:
+          - unique
+          - not_null
+      - name: NOME_CATEGORIA
+        description: Nome da categoria (ex. Bikes, Components, Clothing, Accessories).
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
