@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_sap__clientes
+    description: >
+      Clientes da Adventure Works (customer). Liga o ID de cliente ao ID de
+      pessoa física e ao território de vendas.
+    columns:
+      - name: ID_CLIENTE
+        description: Chave primária do cliente.
+        tests:
+          - unique
+          - not_null
+      - name: ID_PESSOA
+        description: Chave estrangeira para a tabela de pessoas (stg_sap__pessoas).
+      - name: ID_LOJA
+        description: Chave estrangeira para a loja associada ao cliente.
+      - name: ID_TERRITORIO
+        description: Chave estrangeira para o território de vendas.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
+      - name: ID_LINHA_UNICO
+        description: Identificador único global do registro (rowguid).

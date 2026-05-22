@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_sap__pais
+    description: Códigos ISO de países e regiões (countryregion).
+    columns:
+      - name: ID_PAIS
+        description: Código ISO do país (chave primária).
+        tests:
+          - unique
+          - not_null
+      - name: NOME_PAIS
+        description: Nome completo do país ou região.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.

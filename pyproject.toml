@@ -1,20 +1,20 @@
-[tool.poetry]
+[project]
 name = "academy-dbt-test"
 version = "0.1.0"
-description = ""
-authors = ["danielmschaves <danielmschaves@gmail.com>"]
-readme = "README.md"
-package-mode = false
+description = "dbt + BigQuery analytics project for Adventure Works SAP data"
+requires-python = ">=3.11"
+dependencies = [
+    "dbt-core>=1.9",
+    "dbt-bigquery>=1.9",
+    "python-dotenv>=1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-pre-commit = "^4.0.1"
-dbt-core = "^1.8.8"
-python-dotenv = "^1.0.1"
-duckdb = "^1.1.3"
-dbt-bigquery = "^1.8.3"
+[dependency-groups]
+dev = [
+    "pre-commit>=4",
+    "sqlfluff>=3",
+    "sqlfluff-templater-dbt>=3",
+]
 
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv]
+package = false

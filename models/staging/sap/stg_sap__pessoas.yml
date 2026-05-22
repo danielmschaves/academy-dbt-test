@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_sap__pessoas
+    description: >
+      Pessoas associadas à Adventure Works (person): funcionários,
+      contatos de clientes e contatos de fornecedores.
+    columns:
+      - name: ID_ENTIDADE
+        description: Chave primária da entidade de negócio (businessentityid).
+        tests:
+          - unique
+          - not_null
+      - name: TIPO_PESSOA
+        description: Tipo de pessoa (EM=funcionário, IN=cliente individual, SC=contato de loja, etc.).
+      - name: TITULO
+        description: Título honorífico (Sr., Sra., Dr., etc.).
+      - name: NOME
+        description: Primeiro nome.
+      - name: NOME_MEIO
+        description: Nome do meio.
+      - name: SOBRENOME
+        description: Sobrenome.
+      - name: SUFIXO
+        description: Sufixo do nome (Jr., Sr., etc.).
+      - name: PROMOCAO_EMAIL
+        description: Indicador de preferência de recebimento de e-mails promocionais.
+      - name: ESTILO_NOME
+        description: Indica a ordem de exibição do nome (0=padrão ocidental, 1=ordem oriental).
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
+      - name: ID_LINHA_UNICO
+        description: Identificador único global do registro (rowguid).

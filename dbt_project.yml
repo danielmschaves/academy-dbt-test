@@ -36,14 +36,26 @@ models:
     staging:
       +materialized: view
       +schema: stg
-    
+      +tags: ['staging', 'sap']
+      +meta:
+        owner: 'danielmschaves@gmail.com'
+        domain: 'adventure_works'
+
     intermediate:
       +materialized: view
       +schema: int
+      +tags: ['intermediate']
+      +meta:
+        owner: 'danielmschaves@gmail.com'
+        domain: 'adventure_works'
 
     marts:
       +materialized: table
       +schema: mrt
+      +tags: ['marts', 'production']
+      +meta:
+        owner: 'danielmschaves@gmail.com'
+        domain: 'adventure_works'
 seeds:
   academy_dbt_test: 
     sap_adventure_works:

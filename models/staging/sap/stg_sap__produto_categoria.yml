@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_sap__produto_categoria
+    description: Subcategorias de produtos (productsubcategory). Liga produtos a categorias.
+    columns:
+      - name: ID_SUBCATEGORIA
+        description: Chave primária da subcategoria.
+        tests:
+          - unique
+          - not_null
+      - name: ID_CATEGORIA
+        description: Chave estrangeira para a categoria pai.
+      - name: NOME_SUBCATEGORIA
+        description: Nome da subcategoria de produto.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.

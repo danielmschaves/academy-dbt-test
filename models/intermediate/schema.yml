@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: int_cliente_pessoa
+    description: >
+      Une clientes (stg_sap__clientes) com seus dados pessoais (stg_sap__pessoas),
+      produzindo nome completo e território por cliente.
+    columns:
+      - name: ID_CLIENTE
+        description: Identificador natural do cliente.
+        tests:
+          - unique
+          - not_null
+      - name: ID_TERRITORIO
+        description: Território de vendas associado ao cliente.
+      - name: NOME
+        description: Primeiro nome do cliente.
+      - name: SOBRENOME
+        description: Sobrenome do cliente.
+      - name: NOME_COMPLETO
+        description: Concatenação de NOME e SOBRENOME.
+
+  - name: int_endereco_completo
+    description: >
+      Hierarquia geográfica completa: endereço + estado + país.
+      Produz uma linha por ID_ENDERECO com CIDADE, ESTADO e PAIS resolvidos.
+    columns:
+      - name: ID_ENDERECO
+        description: Identificador natural do endereço.
+        tests:
+          - unique
+          - not_null
+      - name: CIDADE
+        description: Cidade do endereço.
+      - name: ESTADO
+        description: Nome completo do estado/província.
+      - name: PAIS
+        description: Nome completo do país.
+
+  - name: int_produto_categoria
+    description: >
+      Enriquece produtos com a hierarquia de categoria (subcategoria → categoria).
+      Um produto pode não ter subcategoria (left join).
+    columns:
+      - name: ID_PRODUTO
+        description: Identificador natural do produto.
+        tests:
+          - unique
+          - not_null
+      - name: ID_CATEGORIA
+        description: Identificador da categoria pai.
+      - name: ID_SUBCATEGORIA
+        description: Identificador da subcategoria.
+      - name: NOME_PRODUTO
+        description: Nome do produto.
+      - name: NOME_SUBCATEGORIA
+        description: Nome da subcategoria do produto.
+      - name: NOME_CATEGORIA
+        description: Nome da categoria do produto.
+
+  - name: int_vendas_pedidos
+    description: >
+      Grain: um registro por item de pedido. Combina cabeçalho (stg_sap__pedido_venda)
+      com detalhe (stg_sap__detalhes_pedido_venda) e resolve o tipo de cartão.
+      Calcula VALOR_BRUTO e VALOR_LIQUIDO e decodifica STATUS para texto.
+    columns:
+      - name: ID_DETALHE_PEDIDO
+        description: Chave primária do item de pedido.
+        tests:
+          - unique
+          - not_null
+      - name: ID_PEDIDO
+        description: Chave do cabeçalho do pedido.
+      - name: ID_PRODUTO
+        description: Produto vendido no item.
+      - name: ID_CLIENTE
+        description: Cliente que realizou o pedido.
+      - name: PRECO_UNITARIO
+        description: Preço unitário do produto na venda.
+      - name: DESCONTO_UNITARIO
+        description: Percentual de desconto aplicado (0 a 1).
+      - name: QUANTIDADE
+        description: Quantidade de unidades vendidas.
+      - name: VALOR_BRUTO
+        description: "PRECO_UNITARIO × QUANTIDADE (sem desconto)."
+      - name: VALOR_LIQUIDO
+        description: "PRECO_UNITARIO × QUANTIDADE × (1 − DESCONTO_UNITARIO)."
+      - name: STATUS
+        description: Status do pedido decodificado (Em Processo, Aprovado, Pendente, etc.).
+      - name: FLAG_PEDIDO_ONLINE
+        description: True se o pedido foi realizado pelo canal online.
+      - name: DATA_PEDIDO
+        description: Data e hora do pedido.

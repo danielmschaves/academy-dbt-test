@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_sap__pedido_motivo_venda
+    description: >
+      Tabela de referência cruzada entre pedidos e motivos de venda
+      (salesorderheadersalesreason). Um pedido pode ter múltiplos motivos.
+    columns:
+      - name: ID_PEDIDO
+        description: Chave estrangeira para o pedido de venda.
+        tests:
+          - not_null
+      - name: ID_MOTIVO_VENDA
+        description: Chave estrangeira para o motivo de venda.
+        tests:
+          - not_null
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.

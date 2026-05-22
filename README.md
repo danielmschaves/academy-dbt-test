@@ -1,147 +1,164 @@
-# Desafio Certificação Analytics Engineer - Indicium Academy
+# Adventure Works Analytics — dbt + BigQuery
 
-Este repositório contém o projeto para a certificação de Analytics Engineer da Indicium Academy. O objetivo é realizar a ingestão e transformação dos dados do SAP da Adventure Works utilizando DBT Core e BigQuery.
+![dbt](https://img.shields.io/badge/dbt-1.9-orange?logo=dbt)
+![BigQuery](https://img.shields.io/badge/BigQuery-Google_Cloud-blue?logo=googlecloud)
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python)
+![SQLFluff](https://img.shields.io/badge/SQLFluff-3.x-green)
 
-## Dashboard do Projeto
+End-to-end analytics engineering project built on **dbt Core** and **BigQuery**.
+Transforms raw SAP Adventure Works data into a star-schema data mart, covering
+the full analytics lifecycle: ingestion → staging → intermediate → marts → dashboard.
 
-O dashboard com as análises e visualizações dos dados pode ser acessado através do link abaixo:
-[Adventure Works Dashboard](https://drive.google.com/file/d/1P5sIFxPpFo0O0Vb3xIx0Xd5AipQMJtO5/view?usp=sharing)
+**[Dashboard](https://drive.google.com/file/d/1P5sIFxPpFo0O0Vb3xIx0Xd5AipQMJtO5/view?usp=sharing)** · **[Conceptual Model](https://drive.google.com/file/d/1ltGTRQKS7peliVuWBNowrY_ltx8IU8oJ/view?usp=sharing)**
 
+---
 
-## Modelo Conceitual
+## Architecture
 
-O modelo conceitual do projeto pode ser acessado através do link abaixo:
-[Modelo Conceitual](https://drive.google.com/file/d/1ltGTRQKS7peliVuWBNowrY_ltx8IU8oJ/view?usp=sharing)
+```mermaid
+flowchart LR
+    CSV["64 CSVs\n(SAP Adventure Works)"]
+    SEEDS["Seeds\nsap_adw schema"]
+    STG["Staging\nviews · stg schema\n13 models"]
+    INT["Intermediate\nviews · int schema\n5 models"]
+    MART["Marts\ntables · mrt schema\n9 models"]
+    BI["Dashboard\nGoogle Drive"]
 
+    CSV --> SEEDS --> STG --> INT --> MART --> BI
+```
 
-## Pré-requisitos
+### Star Schema
 
-- Python 3.8+
-- Poetry (já instalado no ambiente)
-- Conta Google Cloud com acesso ao BigQuery
-- Git
-- Make
+```
+                    dim_data
+                       │
+dim_localidade ── fato_vendas ── dim_produto
+                       │
+dim_clientes      dim_cartao
+                       │
+             bridge_motivo_venda ── dim_motivo_venda
+```
 
-## Configuração do Ambiente
+`fato_vendas` — grain: one row per order line item.
 
-### 1. Clone o Repositório
+`mart_performance_cliente` — analytical aggregate: revenue, order frequency,
+customer lifetime window, and revenue quartile segmentation (NTILE 4).
+
+---
+
+## Stack
+
+| Tool | Version | Role |
+|---|---|---|
+| dbt Core | ≥ 1.9 | transformation |
+| dbt-bigquery | ≥ 1.9 | BigQuery adapter |
+| dbt_utils | 1.0.0 | `date_spine`, `generate_surrogate_key` |
+| BigQuery | — | data warehouse |
+| SQLFluff | ≥ 3 | SQL linting |
+| uv | latest | Python dependency management |
+
+---
+
+## Setup
+
+### Prerequisites
+- Python 3.11+
+- [uv](https://docs.astral.sh/uv/)
+- Google Cloud project with BigQuery enabled
+- Service account key with BigQuery Data Editor + Job User roles
+
+### Installation
 
 ```bash
 git clone https://github.com/danielmschaves/academy-dbt-test.git
 cd academy-dbt-test
+
+# Install Python dependencies (creates .venv automatically)
+uv sync
+
+# Activate virtual environment
+source .venv/bin/activate          # Linux/macOS
+.venv\Scripts\activate             # Windows
 ```
 
-### 2. Ativação do Ambiente Virtual
+### BigQuery credentials
 
-```bash
-# Ativar ambiente virtual do Poetry
-poetry shell
-
-# Instalar dependências do projeto
-poetry install
-```
-
-### 3. Configuração do BigQuery
-
-1. Faça o download do arquivo de credenciais (.json) do seu projeto no BigQuery
-2. Crie uma pasta `temp` no diretório raiz do projeto
-3. Mova o arquivo de credenciais para a pasta `temp`
-4. Configure o arquivo `profiles.yml` na pasta `~/.dbt/` com as seguintes informações:
+1. Download your service account key (`.json`) from Google Cloud Console.
+2. Place it at `temp/<your-keyfile>.json`.
+3. Edit `profiles.yml` in the project root:
 
 ```yaml
-default:
+academy_dbt_test:
+  target: dev
   outputs:
     dev:
       type: bigquery
       method: service-account
-      project: nome-do-projeto
-      dataset: nome-do-dataset 
-      keyfile: temp/keyfile.json  
+      project: <your-gcp-project>
+      dataset: academy_dbt_prod
+      keyfile: temp/<your-keyfile>.json
       location: US
-  target: dev
 ```
 
-5. Verifique a configuração executando:
+4. Verify the connection:
+
 ```bash
 make debug
 ```
 
-## Comandos Make Disponíveis
+---
 
-### Comandos Básicos
+## Commands
 
+| Command | Description |
+|---|---|
+| `make install` | Install Python deps with uv |
+| `make deps` | Install dbt packages |
+| `make seeds` | Load all 64 seed CSVs into BigQuery |
+| `make build` | Build all models (compile + run + test) |
+| `make test` | Run all dbt tests |
+| `make docs` | Generate + serve docs at http://localhost:8080 |
+| `make full-build` | deps → build → test → docs |
+| `make build_stg` | Build staging layer only |
+| `make build_int` | Build intermediate layer only |
+| `make build_marts` | Build marts layer only |
+| `make run_fact` | Build `fato_vendas` only |
+| `make lint` | Lint SQL with SQLFluff |
+| `make fix` | Auto-fix SQL style with SQLFluff |
+| `make full-refresh` | Force-rebuild all incremental models |
+
+**Single model:**
 ```bash
-# Instalar dependências do DBT
-make deps
-
-# Construir todos os modelos 
-make build
-
-# Executar todos os testes
-make test
-
-# Gerar e servir documentação
-make docs
-
-# Build completo (deps + build + test + docs)
-make full-build
+dbt build --select <model_name>
+dbt test  --select <model_name>
 ```
 
-### Comandos por Camada
+> **Note:** `dbt seed` may hang after loading all 64 tables — restart the terminal if it does not return.
 
-```bash
-# Construir modelos de staging
-make build_stg
+---
 
-# Construir modelos intermediários
-make build_int
+## Project Structure
 
-# Construir modelos marts
-make build_marts
-
-# Testar apenas marts
-make test_marts
-
-# Construir tabela fato_vendas
-make run_fact
+```
+models/
+├── staging/sap/        # 13 models — rename + type-cast SAP sources
+├── intermediate/       # 5 models  — joins, business calculations, window functions
+└── marts/              # 9 models  — star schema (fact + dimensions + analytics)
+seeds/sap_adventure_works/
+├── human_resources/
+├── person/
+├── production/
+├── purchasing/
+└── sales/              # 64 CSVs total → sap_adw schema
 ```
 
-## Carregamento dos Dados (Seeds)
+---
 
-O projeto utiliza os dados do SAP da Adventure Works disponibilizados como seeds no DBT.
+## Key Design Decisions
 
-```bash
-# Carregar todas as tabelas
-make seeds
-```
-
-## Camadas do Projeto
-
-- `staging/`: Primeira camada de transformação, padronização e limpeza dos dados brutos
-- `intermediate/`: Camada para transformações intermediárias e preparação para os marts
-- `marts/`: Modelos dimensionais finais organizados por assunto
-
-## Documentação
-
-Para gerar e visualizar a documentação do projeto:
-
-```bash
-make docs
-```
-
-A documentação ficará disponível em http://localhost:8080
-
-## Solução de Problemas
-
-- Se o comando `dbt seed` ficar executando indefinidamente mesmo após o carregamento das 64 tabelas, será necessário reiniciar o terminal.
-
-- Em caso de problemas de conexão com o BigQuery, verifique:
-  - Se o arquivo de credenciais (.json) está no caminho correto especificado no profiles.yml
-  - Se o projeto e dataset do BigQuery existem e você tem as permissões necessárias
-  - Se o arquivo profiles.yml está configurado corretamente
-
-## Documentação e Recursos
-
-- [Documentação do DBT](https://docs.getdbt.com/docs/introduction)
-- [Documentação do BigQuery](https://cloud.google.com/bigquery/docs)
-- [Fórum da Comunidade DBT](https://discourse.getdbt.com/)
+- **Surrogate keys** generated with `dbt_utils.generate_surrogate_key`.
+- **Column naming**: uppercase Portuguese throughout (`SK_CLIENTE`, `VALOR_BRUTO`).
+- **Date dimension** built with `dbt_utils.date_spine` (2011–2014) — continuous calendar, no gaps.
+- **Window functions** in `int_vendas_metricas`: purchase sequence, cumulative revenue, days between orders, product value ranking.
+- **Customer segmentation** in `mart_performance_cliente`: NTILE quartiles over total revenue.
+- `profiles.yml` lives in the project root (not `~/.dbt/`) for portability.

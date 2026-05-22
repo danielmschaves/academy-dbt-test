@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_sap__produto
+    description: >
+      Produtos vendidos ou utilizados na fabricação (product).
+      Não inclui o nome de subcategoria — esse atributo vem de stg_sap__produto_categoria
+      e é enriquecido em int_produto_categoria.
+    columns:
+      - name: ID_PRODUTO
+        description: Chave primária do produto.
+        tests:
+          - unique
+          - not_null
+      - name: ID_SUBCATEGORIA
+        description: Chave estrangeira para a subcategoria do produto.
+      - name: NOME_PRODUTO
+        description: Nome do produto.
+      - name: CODIGO_PRODUTO
+        description: Código interno do produto.
+      - name: CUSTO_PADRAO
+        description: Custo padrão de fabricação ou aquisição do produto.
+      - name: PRECO_LISTA
+        description: Preço de lista (venda) do produto.
+      - name: PESO
+        description: Peso do produto.
+      - name: DATA_INICIO_VENDA
+        description: Data de início da comercialização do produto.
+      - name: DATA_FIM_VENDA
+        description: Data de encerramento da comercialização do produto.
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
+      - name: ID_LINHA_UNICO
+        description: Identificador único global do registro (rowguid).

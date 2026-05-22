@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_sap__motivo_venda
+    description: Lookup de motivos de compra dos clientes (salesreason).
+    columns:
+      - name: ID_MOTIVO_VENDA
+        description: Chave primária do motivo de venda.
+        tests:
+          - unique
+          - not_null
+      - name: NOME_MOTIVO
+        description: Nome descritivo do motivo (ex. Price, Quality, Manufacturer).
+      - name: TIPO_MOTIVO
+        description: Categoria do motivo (ex. Other, Marketing).
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.

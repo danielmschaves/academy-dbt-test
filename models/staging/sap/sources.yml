@@ -84,12 +84,18 @@ sources:
           - name: stateprovinceid
             description: Chave primária da tabela de estados e províncias
       - name: productsubcategory
-        description: Tabela de consulta de estados e províncias
+        description: Subcategorias de produtos que fazem a ponte entre produto e categoria
         columns:
-          - name: stateprovinceid
-            description: Chave primária da tabela de estados e províncias
+          - name: productsubcategoryid
+            description: Chave primária da tabela de subcategorias de produto
+            tests:
+              - unique
+              - not_null
       - name: productcategory
-        description: Tabela de consulta de estados e províncias
+        description: Categorias de alto nível dos produtos (Bikes, Components, Clothing, Accessories)
         columns:
-          - name: stateprovinceid
-            description: Chave primária da tabela de estados e províncias
+          - name: productcategoryid
+            description: Chave primária da tabela de categorias de produto
+            tests:
+              - unique
+              - not_null

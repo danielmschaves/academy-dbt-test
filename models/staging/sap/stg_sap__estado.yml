@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_sap__estado
+    description: Estados e províncias do mundo (stateprovince).
+    columns:
+      - name: ID_ESTADO
+        description: Chave primária do estado/província.
+        tests:
+          - unique
+          - not_null
+      - name: ID_TERRITORIO
+        description: Chave estrangeira para o território de vendas.
+      - name: ID_PAIS
+        description: Código ISO do país ao qual o estado pertence.
+      - name: CODIGO_ESTADO
+        description: Código abreviado do estado.
+      - name: NOME_ESTADO
+        description: Nome completo do estado ou província.
+      - name: FLAG_APENAS_ESTADO
+        description: Indica se o código representa apenas o estado (sem subdivisões).
+      - name: DATA_MODIFICACAO
+        description: Data da última modificação do registro.
+      - name: ID_LINHA_UNICO
+        description: Identificador único global do registro (rowguid).

@@ -1,35 +1,39 @@
-with int_pedido as (
-    select distinct DATA_PEDIDO from {{ ref('stg_sap__pedido_venda') }}
+WITH spine AS (
+    {{
+        dbt_utils.date_spine(
+            datepart = 'day',
+            start_date = "cast('2011-01-01' as date)",
+            end_date = "cast('2015-01-01' as date)"
+        )
+    }}
 ),
-dim_tempo as (
-    select 
+
+dim_tempo AS (
+    SELECT
         -- chave surrogate
-        {{ dbt_utils.generate_surrogate_key([
-            't.DATA_PEDIDO'
-        ]) }} as SK_DATA
-        -- chaves naturais
-        , t.DATA_PEDIDO
-        -- atributos
-        , extract(year from t.DATA_PEDIDO) as ANO
-        , extract(month from t.DATA_PEDIDO) as MES
-        , extract(day from t.DATA_PEDIDO) as DIA
-        , case 
-            when extract(month from t.DATA_PEDIDO) = 1 then 'Janeiro'
-            when extract(month from t.DATA_PEDIDO) = 2 then 'Fevereiro'
-            when extract(month from t.DATA_PEDIDO) = 3 then 'Março'
-            when extract(month from t.DATA_PEDIDO) = 4 then 'Abril'
-            when extract(month from t.DATA_PEDIDO) = 5 then 'Maio'
-            when extract(month from t.DATA_PEDIDO) = 6 then 'Junho'
-            when extract(month from t.DATA_PEDIDO) = 7 then 'Julho'
-            when extract(month from t.DATA_PEDIDO) = 8 then 'Agosto'
-            when extract(month from t.DATA_PEDIDO) = 9 then 'Setembro'
-            when extract(month from t.DATA_PEDIDO) = 10 then 'Outubro'
-            when extract(month from t.DATA_PEDIDO) = 11 then 'Novembro'
-            when extract(month from t.DATA_PEDIDO) = 12 then 'Dezembro'
-          end as NOME_MES
-        , extract(quarter from t.DATA_PEDIDO) as TRIMESTRE
+        {{ dbt_utils.generate_surrogate_key(['date_day']) }} AS SK_DATA,
+        -- chave natural
+        date_day AS DATA_PEDIDO,
+        -- atributos de ano/mês/dia
+        EXTRACT(year FROM date_day) AS ANO,
+        EXTRACT(quarter FROM date_day) AS TRIMESTRE,
+        EXTRACT(month FROM date_day) AS MES,
+        ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+         'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+            [ORDINAL(EXTRACT(month FROM date_day))] AS NOME_MES,
+        EXTRACT(day FROM date_day) AS DIA,
+        -- atributos de semana
+        EXTRACT(dayofweek FROM date_day) AS DIA_SEMANA,
+        ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+            [ORDINAL(EXTRACT(dayofweek FROM date_day))] AS NOME_DIA_SEMANA,
+        EXTRACT(week FROM date_day) AS SEMANA_ANO,
+        -- flags
+        EXTRACT(dayofweek FROM date_day) IN (1, 7) AS IS_FIM_SEMANA,
+        date_day = DATE_TRUNC(date_day, MONTH) AS IS_PRIMEIRO_DIA_MES,
+        date_day = LAST_DAY(date_day, MONTH) AS IS_ULTIMO_DIA_MES,
         -- metadados
-        , current_timestamp() as DW_DATA_CARGA
-    from int_pedido as t
+        CURRENT_TIMESTAMP() AS DW_DATA_CARGA
+    FROM spine
 )
-select * from dim_tempo
+
+SELECT * FROM dim_tempo
